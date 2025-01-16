@@ -37,7 +37,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-13, macos-14]
+        os: [ubuntu-latest, ubuntu-24.04-arm, windows-latest, macos-13, macos-14]
         python_version: ['3.13']
         include:
         - os: ubuntu-latest
@@ -129,7 +129,7 @@ jobs:
   emulated-archs:
     name: Get qemu emulated architectures
     needs: lint
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
     outputs:
       archs: ${{ steps.archs.outputs.archs }}
     steps:
@@ -150,7 +150,7 @@ jobs:
   test-emulated:
     name: Test Linux ${{ matrix.arch }} using qemu
     needs: emulated-archs
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 180
     strategy:
       matrix:
@@ -173,7 +173,7 @@ jobs:
   test-pyodide:
     name: Test cibuildwheel building Pyodide wheels
     needs: lint
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 180
     steps:
     - uses: actions/checkout@v4
